@@ -33,8 +33,8 @@ public class ParametersAspect {
 		System.out.println("To Long String: "+ joinPoint.toLongString());
 		System.out.println("To Short String: "+ joinPoint.toShortString());
 		System.out.println("Signature: "+ joinPoint.getSignature());
-		System.out.println("Source Location"+ joinPoint.getSourceLocation());
-		System.out.println("Static part"+ joinPoint.getStaticPart());
+		System.out.println("Source Location: "+ joinPoint.getSourceLocation());
+		System.out.println("Static part: "+ joinPoint.getStaticPart());
 		System.out.println("THIS: "+ joinPoint.getTarget());
 		System.out.println("=====================");
 	}
