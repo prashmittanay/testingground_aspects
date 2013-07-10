@@ -43,7 +43,7 @@ public class BasicAspects {
 	//Typically used for releasing resources
 	@After("execution(public * testing.ground.model.*.*(..))")
 	public void notifyEveryMethodExecution(){
-		System.out.println("A method just complete");
+		System.out.println("A method just completed");
 	}
 	
 	@Around("execution(* testing.ground.model.PokeModel.multiplesOfTen())")
