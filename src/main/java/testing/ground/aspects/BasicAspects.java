@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-public class TesterAspect {
-
+public class BasicAspects {
+	
 	@Before("execution(public * testing.ground.model.PokeModel.*(..))")
 	public void sayHello(){
 		System.out.println("hello there....i see you are executing a method");
@@ -31,4 +31,3 @@ public class TesterAspect {
 		System.out.println("Seems to be an error");
 	}
 }
-

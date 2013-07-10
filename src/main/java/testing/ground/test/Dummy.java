@@ -11,7 +11,8 @@ public class Dummy {
 		
 		PokeModel pokeModel = (PokeModel) context.getBean("pokeModel");
 		/*pokeModel.poke();
-		pokeModel.secondPoke();*/
+		pokeModel.secondPoke();
+		pokeModel.getName();*/
 		
 		/*pokeModel.throwingException();*/
 	}
