@@ -17,6 +17,12 @@ public class PokeModel {
 	}
 	
 	public void throwingException(){
-		throw new NullPointerException();
+		throw new NullPointerException("Mehh...!!!");
+	}
+	
+	public void multiplesOfTen(){
+		for (int i = 1; i <= 10; i++) {
+			System.out.println(i*10);
+		}
 	}
 }

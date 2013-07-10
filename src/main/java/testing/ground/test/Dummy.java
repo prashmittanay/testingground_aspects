@@ -10,10 +10,12 @@ public class Dummy {
 		ApplicationContext context = new FileSystemXmlApplicationContext("//home/prashmit/Documents/projects/TestingGround/src/main/webapp/WEB-INF/applicationContext.xml");
 		
 		PokeModel pokeModel = (PokeModel) context.getBean("pokeModel");
-		/*pokeModel.poke();
-		pokeModel.secondPoke();
+		/*pokeModel.poke();*/
+		/*pokeModel.secondPoke();
 		pokeModel.getName();*/
 		
-		/*pokeModel.throwingException();*/
+/*		pokeModel.throwingException();*/
+		
+		pokeModel.multiplesOfTen();
 	}
 }
