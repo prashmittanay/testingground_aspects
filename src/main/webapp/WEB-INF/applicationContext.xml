@@ -31,4 +31,10 @@
 	</bean>
 	
 	<bean id="myAspect" class="testing.ground.aspects.NotVeryUsefulAspect"></bean>
+	
+	<bean id="namedParameterJdbcTemplate"
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+		<constructor-arg ref="datasource"></constructor-arg>
+	</bean>
+	
 </beans>
