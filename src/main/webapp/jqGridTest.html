@@ -38,7 +38,7 @@
 
 <body>
 	<h1>Hello THere</h1>
-	<div style="margin-left: 100px;"> 
+	<div> 
 			<table id="list"></table> 
     		<div id="pager"></div> 
 	</div>
@@ -52,7 +52,8 @@
 	<script src="js/i18n/grid.locale-en.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			constructGrid();
+			/* constructGrid(); */
+			drawDemoGrid();
 		});
 		
 		
@@ -78,6 +79,29 @@
 		        autoencode: true,
 		        caption: "My first grid"
 			}).navGrid('#pager')
+		}
+		
+		function drawDemoGrid(){
+			$('table#list').jqGrid({
+				url: 'rest/jqgrid/jqusers',
+				datatype: 'json',
+				mtype: 'GET',
+				colNames: ['Email', 'Name', 'Roles'],
+				colModel: [
+					{name: 'email'},
+					{name: 'name'},
+					{name: 'role'}
+				],
+				autowidth: true,
+				pager: '#pager',
+				rowNum: 10,
+				sortname: 'email',
+				sortorder: 'asc',
+				viewrecords: true,
+		        gridview: true,
+		        autoencode: true,
+		        caption: "My first grid"
+			})
 		}
 	</script>
 </body>
