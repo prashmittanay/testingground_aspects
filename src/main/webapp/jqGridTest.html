@@ -42,7 +42,7 @@
 		<table id="list"></table>
 		<div id="pager"></div>
 		
-		<table id="s3list"></table> 
+		<table id="s3list" style="width: 900px;"></table> 
 		<div id="s3pager"></div>
 		<div id="filter" style="margin-left:30%;display:none">Search Invoices</div>
 	</div>
@@ -113,7 +113,7 @@
 			$('table#s3list').jqGrid({
 					url:'rest/jqgrid/usertoolbarexample', 
 					datatype: "json", 
-					width: 700, 
+					width: 1200, 
 					colNames:['Email', 'Name', 'Role'], 
 					colModel:[ 
 					           {name:'email',index:'email', width:65}, 
@@ -127,7 +127,7 @@
 					sortname: 'email', 
 					viewrecords: true, 
 					rownumbers: true, 
-					sortorder: "desc", 
+					sortorder: "asc", 
 					gridview : true, 
 					caption:"Toolbar Search Example" 
 			}); 

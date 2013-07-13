@@ -53,9 +53,19 @@ public class JqGridRest {
 	public Response jqUsersToolbar(MultivaluedMap<String, String> map) {
 		JqGridBean jqBeanBuilder = jqGridUtils.jqBeanBuilder(map);
 		String[] cols = {"email", "name", "role"};
+		jqBeanBuilder.setCount(jqDao.getJqUsersCount());
+		jqGridUtils.setStartLimit(jqBeanBuilder);
+		
 		jqBeanBuilder.setToolbarSearchQuery(jqGridUtils.constructToolbarQuery(map, Arrays.asList(cols)));
-		System.out.println(jqBeanBuilder);
-		return Response.status(200).build();
+		List<Map<String, Object>> customUserData = jqDao.getCustomUserData(jqBeanBuilder);
+		jqGridUtils.setPageNumber(jqBeanBuilder);
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("page", jqBeanBuilder.getCurrentPage());
+		resultMap.put("total", jqBeanBuilder.getTotalPages());
+		resultMap.put("records", jqBeanBuilder.getCount());
+		resultMap.put("rows", customUserData);
+		return Response.status(200).entity(resultMap).build();
 	}
 	
 	private Map<String, Object> processRequest(MultivaluedMap<String, String> queryParameters){
@@ -77,6 +87,4 @@ public class JqGridRest {
 		map.put("rows", jqUsers);
 		return map;
 	}
-	
-	
 }

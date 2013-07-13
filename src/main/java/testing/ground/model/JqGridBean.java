@@ -1,25 +1,28 @@
 package testing.ground.model;
 
 public class JqGridBean {
-	private int page;
+	private int currentPage;
 	private int rows;
-	private int total;
+	private int totalPages;
+	private int count;
+	private int start;
 	private String sort;
 	private String sid;
 	private String toolbarSearchQuery;
 	private boolean search;
 	@Override
 	public String toString() {
-		return "JqGridBean [page=" + page + ", rows=" + rows + ", total="
-				+ total + ", sort=" + sort + ", sid=" + sid
+		return "JqGridBean [currentPage=" + currentPage + ", rows=" + rows
+				+ ", totalPages=" + totalPages + ", count=" + count
+				+ ", start=" + start + ", sort=" + sort + ", sid=" + sid
 				+ ", toolbarSearchQuery=" + toolbarSearchQuery + ", search="
 				+ search + "]";
 	}
-	public int getPage() {
-		return page;
+	public int getCurrentPage() {
+		return currentPage;
 	}
-	public void setPage(int page) {
-		this.page = page;
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 	public int getRows() {
 		return rows;
@@ -27,11 +30,23 @@ public class JqGridBean {
 	public void setRows(int rows) {
 		this.rows = rows;
 	}
-	public int getTotal() {
-		return total;
+	public int getTotalPages() {
+		return totalPages;
 	}
-	public void setTotal(int total) {
-		this.total = total;
+	public void setTotalPages(int totalPages) {
+		this.totalPages = totalPages;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public int getStart() {
+		return start;
+	}
+	public void setStart(int start) {
+		this.start = start;
 	}
 	public String getSort() {
 		return sort;
