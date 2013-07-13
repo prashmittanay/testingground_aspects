@@ -38,9 +38,13 @@
 
 <body>
 	<h1>Hello THere</h1>
-	<div> 
-			<table id="list"></table> 
-    		<div id="pager"></div> 
+	<div>
+		<table id="list"></table>
+		<div id="pager"></div>
+		
+		<table id="s3list"></table> 
+		<div id="s3pager"></div>
+		<div id="filter" style="margin-left:30%;display:none">Search Invoices</div>
 	</div>
 
 
@@ -53,7 +57,8 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			/* constructGrid(); */
-			drawDemoGrid();
+			/* drawDemoGrid(); */
+			drawToolbarGrid();
 		});
 		
 		
@@ -102,6 +107,34 @@
 		        autoencode: true,
 		        caption: "My first grid"
 			})
+		}
+		
+		function drawToolbarGrid(){
+			$('table#s3list').jqGrid({
+					url:'rest/jqgrid/usertoolbarexample', 
+					datatype: "json", 
+					width: 700, 
+					colNames:['Email', 'Name', 'Role'], 
+					colModel:[ 
+					           {name:'email',index:'email', width:65}, 
+					           {name:'name',index:'name', width:100}, 
+					           {name:'role',index:'role', width:80}
+					], 
+					rowNum:10, 
+					mtype: "POST", 
+					rowList:[10,20,30], 
+					pager: '#s3pager', 
+					sortname: 'email', 
+					viewrecords: true, 
+					rownumbers: true, 
+					sortorder: "desc", 
+					gridview : true, 
+					caption:"Toolbar Search Example" 
+			}); 
+			$("#s3list").jqGrid('navGrid','#s3pager',{edit:false,add:false,del:false,search:false,refresh:false}); 
+			$("#s3list").jqGrid('navButtonAdd',"#s3pager",{caption:"Toggle",title:"Toggle Search Toolbar", buttonicon :'ui-icon-pin-s', onClickButton:function(){ mygrid[0].toggleToolbar() } }); 
+			$("#s3list").jqGrid('navButtonAdd',"#s3pager",{caption:"Clear",title:"Clear Search",buttonicon :'ui-icon-refresh', onClickButton:function(){ mygrid[0].clearToolbar() } }); 
+			$("#s3list").jqGrid('filterToolbar'); 
 		}
 	</script>
 </body>

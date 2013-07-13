@@ -1,10 +1,13 @@
 package testing.ground.rest;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -15,12 +18,18 @@ import javax.ws.rs.core.UriInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.sun.jersey.core.impl.provider.entity.MimeMultipartProvider;
+
 import testing.ground.dao.JqDao;
+import testing.ground.model.JqGridBean;
+import testing.ground.utility.JqGridUtils;
 
 @Path("/jqgrid")
 @Component
 public class JqGridRest {
 	@Autowired private JqDao jqDao;
+	@Autowired private JqGridUtils jqGridUtils;
 	
 	@GET
 	@Path("/getallusers")
@@ -37,6 +46,17 @@ public class JqGridRest {
 		return Response.status(200).entity(processRequest(queryParameters)).build();
 	}
 	
+	@POST
+	@Path("/usertoolbarexample")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response jqUsersToolbar(MultivaluedMap<String, String> map) {
+		JqGridBean jqBeanBuilder = jqGridUtils.jqBeanBuilder(map);
+		String[] cols = {"email", "name", "role"};
+		jqBeanBuilder.setToolbarSearchQuery(jqGridUtils.constructToolbarQuery(map, Arrays.asList(cols)));
+		System.out.println(jqBeanBuilder);
+		return Response.status(200).build();
+	}
 	
 	private Map<String, Object> processRequest(MultivaluedMap<String, String> queryParameters){
 		int page = Integer.parseInt(queryParameters.getFirst("page"));
@@ -57,4 +77,6 @@ public class JqGridRest {
 		map.put("rows", jqUsers);
 		return map;
 	}
+	
+	
 }
