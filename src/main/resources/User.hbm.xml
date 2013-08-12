@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="testing.ground.beans">
+
+    <class name="testing.ground.beans.UserBean" table="users">
+        <id name="id" column="id">
+            <generator class="increment"/>
+        </id>
+        <property name="name" type="java.lang.String" column="name"/>
+        <property name="username" type="java.lang.String" column="username"/>
+        <property name="password" type="java.lang.String" column="password"/>
+        <property name="role" type="java.lang.String" column="role"/>
+        <property name="creationDate" type="java.util.Date" column="creation_date"/>
+        <property name="deactivationDate" type="java.util.Date" column="deactivation_date"/>
+        <property name="status" type="java.lang.Integer" column="status"/>
+		<property name="remarks" type="java.lang.String" column="remarks"/>
+    </class>
+
+</hibernate-mapping>
