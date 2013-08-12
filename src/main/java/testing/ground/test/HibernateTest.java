@@ -1,5 +1,6 @@
 package testing.ground.test;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class HibernateTest {
 		HibernateTest ht = new HibernateTest();
 		ht.sessionFactory = new Configuration().configure().buildSessionFactory();
 		ht.getData();
+		ht.insertData(ht.getUserBean());
 	}
 	
 	public void getData(){
@@ -32,5 +34,15 @@ public class HibernateTest {
 	}
 	
 	
+	public void insertData(UserBean userBean){
+		Session session = this.sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		session.save(userBean);
+		session.getTransaction().commit();
+	}
 	
+	public UserBean getUserBean(){
+		UserBean userBean = new UserBean("Checker HB", "hb_check", "abcd", "tester", "checker@nic.in", new Date(), null, 0, "New User");
+		return userBean;
+	}
 }

@@ -81,4 +81,23 @@ public class UserBean {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	public UserBean(String name, String username, String password,
+			String role, String email, Date creationDate,
+			Date deactivationDate, int status, String remarks) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.email = email;
+		this.creationDate = creationDate;
+		this.deactivationDate = deactivationDate;
+		this.status = status;
+		this.remarks = remarks;
+	}
+	public UserBean() {
+		super();
+	}
+	
+	
 }
