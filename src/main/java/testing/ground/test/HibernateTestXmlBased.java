@@ -10,11 +10,11 @@ import org.hibernate.cfg.Configuration;
 
 import testing.ground.beans.UserBean;
 
-public class HibernateTest {
+public class HibernateTestXmlBased {
 	private SessionFactory sessionFactory;
 	
 	public static void main(String[] args) {
-		HibernateTest ht = new HibernateTest();
+		HibernateTestXmlBased ht = new HibernateTestXmlBased();
 		ht.sessionFactory = new Configuration().configure().buildSessionFactory();
 		ht.getData();
 		ht.insertData(ht.getUserBean());
