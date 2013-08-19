@@ -50,8 +50,16 @@ body {
 	<script src="js/i18n/grid.locale-en.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			
+			init();
 		})
+		
+		function init(){
+			$.ajax({
+				url: 'rest/jasper/compilefirstreport'
+			}).statusCode({
+				
+			})
+		}
 	</script>
 </body>
 </html>
