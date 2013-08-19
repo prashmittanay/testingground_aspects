@@ -18,7 +18,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="testing.ground" />
 
-	<bean id="datasource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url"
@@ -34,7 +34,7 @@
 	
 	<bean id="namedParameterJdbcTemplate"
 		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-		<constructor-arg ref="datasource"></constructor-arg>
+		<constructor-arg ref="dataSource"></constructor-arg>
 	</bean>
 	
 	<bean

@@ -1,6 +1,6 @@
 package testing.ground.rest;
 
-import javax.activation.DataSource;
+import javax.sql.DataSource;
 import javax.ws.rs.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
