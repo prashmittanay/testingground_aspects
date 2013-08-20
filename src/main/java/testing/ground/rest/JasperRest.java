@@ -25,47 +25,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @Path("/jasper")
 public class JasperRest {
-	@Autowired DataSource dataSource;
-	@Autowired NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	@Autowired
+	DataSource dataSource;
+	@Autowired
+	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	private String path = "WEB-INF/reports/";
-	
+
+	/**
+	 * simple example no dynamic content
+	 * */
 	@GET
 	@Path("/compilefirstreport")
 	@Produces("applicaiton/pdf")
-	public Response compileFirstReport(@Context ServletContext context, @Context HttpServletResponse response) throws JRException, IOException{
+	public Response compileFirstReport(@Context ServletContext context,
+			@Context HttpServletResponse response) throws JRException,
+			IOException {
 		String jrxmlPath = context.getRealPath(path + "firstReport.jrxml");
 		String jasperPath = context.getRealPath(path + "firstReport.jasper");
-		
+
 		File jasperFile = new File(jasperPath);
-		//check if jasper already exists
-		if(!jasperFile.exists()){
+		// check if jasper already exists
+		if (!jasperFile.exists()) {
 			compileReport(jrxmlPath);
 		}
 
-//		fillReport(jasperPath, new HashMap<String, Object>(), new JREmptyDataSource());
-		
-		InputStream jasperStream = context.getResourceAsStream("WEB-INF/reports/firstReport.jasper");
-		byte[] pdfBytes = JasperRunManager.runReportToPdf(jasperStream, new HashMap<String, Object>(), new JREmptyDataSource());
+		// fillReport(jasperPath, new HashMap<String, Object>(), new
+		// JREmptyDataSource());
+
+		InputStream jasperStream = context
+				.getResourceAsStream("WEB-INF/reports/firstReport.jasper");
+		byte[] pdfBytes = JasperRunManager.runReportToPdf(jasperStream,
+				new HashMap<String, Object>(), new JREmptyDataSource());
 
 		ServletOutputStream outputStream = response.getOutputStream();
 		outputStream.write(pdfBytes);
 		ResponseBuilder responseRest = Response.ok();
-		responseRest.header("Content-Disposition","attachment; filename=firstReport.pdf");
+		responseRest.header("Content-Disposition",
+				"attachment; filename=firstReport.pdf");
 		return responseRest.build();
-		
 	}
-	
-	private void compileReport(String jrxmlPath) throws JRException{
+
+	private void compileReport(String jrxmlPath) throws JRException {
 		JasperCompileManager.compileReportToFile(jrxmlPath);
 	}
-	
+
 	@SuppressWarnings("unused")
-	private void fillReport(String jasperPath, Map<String, Object> paramMap, JRDataSource jrDataSource) throws JRException{
+	private void fillReport(String jasperPath, Map<String, Object> paramMap,
+			JRDataSource jrDataSource) throws JRException {
 		JasperFillManager.fillReport(jasperPath, paramMap, jrDataSource);
 	}
 }
-
