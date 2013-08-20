@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.persistence.GeneratedValue;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.ws.rs.GET;
@@ -66,6 +69,14 @@ public class JasperRest {
 		responseRest.header("Content-Disposition",
 				"attachment; filename=firstReport.pdf");
 		return responseRest.build();
+	}
+	
+	@GET
+	@Path("/basicdbreport")
+	@Produces("application/pdf")
+	public Response basicDbReport(@Context HttpServletRequest request, @Context HttpServletResponse response){
+		ResponseBuilder restResponse = Response.ok();
+		return restResponse.build();
 	}
 
 	private void compileReport(String jrxmlPath) throws JRException {
