@@ -86,7 +86,7 @@ public class JasperRest {
 
 		// check if compiled report exists
 		if (!file.exists()) {
-			compileReport(path + reportName + JRXML_EXTENSTION);
+			compileReport(context.getRealPath(path + reportName + JRXML_EXTENSTION));
 		}
 
 		// fill compiled report
