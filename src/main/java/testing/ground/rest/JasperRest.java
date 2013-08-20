@@ -3,13 +3,12 @@ package testing.ground.rest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.persistence.GeneratedValue;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.ws.rs.GET;
@@ -36,6 +35,8 @@ public class JasperRest {
 	@Autowired
 	NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 	private String path = "WEB-INF/reports/";
+	private final String JASPER_EXTENSION = ".jasper";
+	private final String JRXML_EXTENSTION = ".jrxml";
 
 	/**
 	 * simple example no dynamic content
@@ -70,12 +71,51 @@ public class JasperRest {
 				"attachment; filename=firstReport.pdf");
 		return responseRest.build();
 	}
-	
+
 	@GET
 	@Path("/basicdbreport")
 	@Produces("application/pdf")
-	public Response basicDbReport(@Context HttpServletRequest request, @Context HttpServletResponse response){
+	public Response basicDbReport(@Context ServletContext context,
+			@Context HttpServletResponse response) throws JRException,
+			IOException {
+		Connection connection = null;
+		byte[] reportBytes = null;
+		String reportName = "firstsqlexample";
+
+		File file = new File(path + reportName + JASPER_EXTENSION);
+
+		// check if compiled report exists
+		if (!file.exists()) {
+			compileReport(path + reportName + JRXML_EXTENSTION);
+		}
+
+		// fill compiled report
+		InputStream compiledReportStream = context.getResourceAsStream(path
+				+ reportName + JASPER_EXTENSION);
+
+		try {
+			connection = dataSource.getConnection();
+			reportBytes = JasperRunManager.runReportToPdf(compiledReportStream,
+					new HashMap<String, Object>(), connection);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if (reportBytes != null) {
+			ServletOutputStream outputStream = response.getOutputStream();
+			outputStream.write(reportBytes);
+		}
+
 		ResponseBuilder restResponse = Response.ok();
+		restResponse.header("Content-Disposition",
+				"attachment; filename=firstSQLReport.pdf");
 		return restResponse.build();
 	}
 
