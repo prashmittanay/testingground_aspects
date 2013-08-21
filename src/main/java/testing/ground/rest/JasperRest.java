@@ -15,6 +15,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
@@ -87,7 +88,8 @@ public class JasperRest {
 
 		// check if compiled report exists
 		if (!file.exists()) {
-			compileReport(context.getRealPath(path + reportName + JRXML_EXTENSTION));
+			compileReport(context.getRealPath(path + reportName
+					+ JRXML_EXTENSTION));
 		}
 
 		// fill compiled report
@@ -119,15 +121,18 @@ public class JasperRest {
 				"attachment; filename=firstSQLReport.pdf");
 		return restResponse.build();
 	}
-	
-	@POST
+
+	@GET
 	@Path("/basicreportparameterexample")
 	@Produces("application/pdf")
-	public Response basicReportParameterExample(@Context ServletContext context, @Context HttpServletResponse response){
-		
+	public Response basicReportParameterExample(
+			@Context ServletContext context,
+			@Context HttpServletResponse response,
+			@QueryParam("position") int position) {
+		System.out.println(position);
 		return null;
 	}
-	
+
 	private void compileReport(String jrxmlPath) throws JRException {
 		JasperCompileManager.compileReportToFile(jrxmlPath);
 	}

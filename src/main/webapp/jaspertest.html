@@ -41,7 +41,10 @@ body {
 	<h1>Hello THere</h1>
 	<div>
 		<a href="rest/jasper/compilefirstreport">Get Static Report</a><br>
-		<a href="rest/jasper/basicdbreport">Get SQL Report</a>
+		<a href="rest/jasper/basicdbreport">Get SQL Report</a><br>
+		<a href="rest/jasper/basicreportparameterexample" id="positionreporturl" style="display: none;">Get SQL Report</a><br>
+		
+		<input id="position" type="text" /><br><button id="getreportperposition" class='btn'>Get Queries</button><br>
 	</div>
 
 
@@ -57,11 +60,15 @@ body {
 		})
 		
 		function init(){
-			/* $.ajax({
-				url: 'rest/jasper/compilefirstreport'
-			}).statusCode({
+			$('#getreportperposition').click(function(){
+				console.log('here');
+				var position = $('#position').val();
+				var finalURL = $('a#positionreporturl').attr('href')+"?position="+position;
+				$('a#positionreporturl').attr('href', finalURL);
+				/* $('a#positionreporturl').trigger('click'); */
 				
-			}) */
+				location.href = $('a#positionreporturl').attr('href');
+			});
 		}
 	</script>
 </body>
