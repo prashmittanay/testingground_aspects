@@ -12,7 +12,6 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -128,9 +127,50 @@ public class JasperRest {
 	public Response basicReportParameterExample(
 			@Context ServletContext context,
 			@Context HttpServletResponse response,
-			@QueryParam("position") int position) {
-		System.out.println(position);
-		return null;
+			@QueryParam("position") int position) throws JRException,
+			IOException {
+		Connection connection = null;
+		byte[] reportBytes = null;
+		String reportName = "simpleparameterexample";
+		
+		File file = new File(context.getRealPath(path + reportName + JASPER_EXTENSION));
+
+		// check if compiled report exists
+		if (!file.exists()) {
+			compileReport(context.getRealPath(path + reportName
+					+ JRXML_EXTENSTION));
+		}
+
+		// fill compiled report
+		InputStream compiledReportStream = context.getResourceAsStream(path
+				+ reportName + JASPER_EXTENSION);
+
+		try {
+			connection = dataSource.getConnection();
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("position", position);
+			reportBytes = JasperRunManager.runReportToPdf(compiledReportStream,
+					paramMap, connection);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		if (reportBytes != null) {
+			ServletOutputStream outputStream = response.getOutputStream();
+			outputStream.write(reportBytes);
+		}
+
+		ResponseBuilder restResponse = Response.ok();
+		restResponse.header("Content-Disposition",
+				"attachment; filename=firstSQLReport.pdf");
+		return restResponse.build();
 	}
 
 	private void compileReport(String jrxmlPath) throws JRException {
