@@ -12,6 +12,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -118,7 +119,15 @@ public class JasperRest {
 				"attachment; filename=firstSQLReport.pdf");
 		return restResponse.build();
 	}
-
+	
+	@POST
+	@Path("/basicreportparameterexample")
+	@Produces("application/pdf")
+	public Response basicReportParameterExample(@Context ServletContext context, @Context HttpServletResponse response){
+		
+		return null;
+	}
+	
 	private void compileReport(String jrxmlPath) throws JRException {
 		JasperCompileManager.compileReportToFile(jrxmlPath);
 	}
