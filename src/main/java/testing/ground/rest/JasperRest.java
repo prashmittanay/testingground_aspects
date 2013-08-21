@@ -130,9 +130,10 @@ public class JasperRest {
 			@QueryParam("position") int position) throws JRException,
 			IOException {
 		Connection connection = null;
-		byte[] reportBytes = null;
 		String reportName = "simpleparameterexample";
-		
+		ServletOutputStream outputStream = response.getOutputStream();
+		response.setHeader("Content-Disposition",
+				"attachment; filename=firstparameterReport.pdf");
 		File file = new File(context.getRealPath(path + reportName + JASPER_EXTENSION));
 
 		// check if compiled report exists
@@ -149,8 +150,7 @@ public class JasperRest {
 			connection = dataSource.getConnection();
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			paramMap.put("position", position);
-			reportBytes = JasperRunManager.runReportToPdf(compiledReportStream,
-					paramMap, connection);
+			JasperRunManager.runReportToPdfStream(compiledReportStream, outputStream, paramMap, connection);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -162,14 +162,7 @@ public class JasperRest {
 			}
 		}
 
-		if (reportBytes != null) {
-			ServletOutputStream outputStream = response.getOutputStream();
-			outputStream.write(reportBytes);
-		}
-
 		ResponseBuilder restResponse = Response.ok();
-		restResponse.header("Content-Disposition",
-				"attachment; filename=firstSQLReport.pdf");
 		return restResponse.build();
 	}
 
