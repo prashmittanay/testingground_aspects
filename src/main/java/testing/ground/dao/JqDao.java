@@ -49,4 +49,8 @@ public class JqDao {
 		Map<String, String> paramMap = new HashMap<String, String>();
 		return namedParameterJdbcTemplate.queryForList(finalQuery, paramMap);
 	}
+	
+	public List<Map<String, Object>> randomQueryRunner(String query){
+		return namedParameterJdbcTemplate.queryForList(query, new HashMap<String, Object>());
+	}
 }

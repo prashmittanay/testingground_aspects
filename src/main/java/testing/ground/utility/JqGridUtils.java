@@ -1,7 +1,10 @@
 package testing.ground.utility;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
 import javax.ws.rs.core.MultivaluedMap;
 import org.springframework.stereotype.Component;
 import testing.ground.model.JqGridBean;
@@ -41,5 +44,18 @@ public class JqGridUtils {
 	public void setStartLimit(JqGridBean bean){
 		int start = bean.getCurrentPage() * bean.getRows() - bean.getRows();
 		bean.setStart(start);
+	}
+	
+	public String buildQueryForReportExample(JqGridBean bean){
+		String baseQuery = "select email, name, role from users";
+		String ordering = " order by "+bean.getSid()+" "+bean.getSort();
+		String limit = " limit "+bean.getStart()+","+bean.getRows();
+		String condition = null;
+		if(bean.getToolbarSearchQuery()!=null && bean.getToolbarSearchQuery().length()> 0){
+			condition = " where "+bean.getToolbarSearchQuery();
+		}
+		
+		String finalQuery = baseQuery +( condition  == null? "":condition )+ordering;
+		return finalQuery;
 	}
 }

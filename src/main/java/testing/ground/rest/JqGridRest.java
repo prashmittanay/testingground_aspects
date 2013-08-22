@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -50,7 +51,7 @@ public class JqGridRest {
 	@Path("/usertoolbarexample")
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response jqUsersToolbar(MultivaluedMap<String, String> map) {
+	public Response jqUsersToolbar(MultivaluedMap<String, String> map, @Context HttpServletRequest request) {
 		JqGridBean jqBeanBuilder = jqGridUtils.jqBeanBuilder(map);
 		String[] cols = {"email", "name", "role"};
 		jqBeanBuilder.setCount(jqDao.getJqUsersCount());
@@ -65,6 +66,9 @@ public class JqGridRest {
 		resultMap.put("total", jqBeanBuilder.getTotalPages());
 		resultMap.put("records", jqBeanBuilder.getCount());
 		resultMap.put("rows", customUserData);
+		
+		//set the query in session
+		request.getSession().setAttribute("latestQuery", jqGridUtils.buildQueryForReportExample(jqBeanBuilder));
 		return Response.status(200).entity(resultMap).build();
 	}
 	
