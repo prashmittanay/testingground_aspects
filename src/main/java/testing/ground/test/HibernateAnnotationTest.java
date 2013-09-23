@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import testing.ground.beans.Person;
 import testing.ground.beans.SiteBean;
 
 public class HibernateAnnotationTest {
@@ -15,8 +16,9 @@ public class HibernateAnnotationTest {
 	public static void main(String[] args) {
 		HibernateAnnotationTest ht = new HibernateAnnotationTest();
 		ht.sessionFactory = new Configuration().configure().buildSessionFactory();
-		ht.getAllSites();
-		ht.insertSiteData(ht.getSiteBean());
+		/*ht.getAllSites();
+		ht.insertSiteData(ht.getSiteBean());*/
+		ht.getAllUsers();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -44,5 +46,19 @@ public class HibernateAnnotationTest {
 	public SiteBean getSiteBean(){
 		SiteBean siteBean = new SiteBean("http://tester.gov.in", 1, 1, 0);
 		return siteBean;
+	}
+	
+	public void getAllUsers(){
+		Session session = sessionFactory.getCurrentSession();
+		session.beginTransaction();
+		List<Person> list = session.createQuery("from Person").list();
+		session.close();
+		
+		Iterator<Person> iterator = list.iterator();
+		
+		while (iterator.hasNext()) {
+			Person person = (Person) iterator.next();
+			System.out.println(person);
+		}
 	}
 }
