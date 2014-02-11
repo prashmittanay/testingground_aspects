@@ -1,8 +1,10 @@
 package testing.ground.rest;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -12,6 +14,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import testing.ground.beans.TempBean;
 import testing.ground.dao.MiscDao;
 
 @Component
@@ -26,5 +29,13 @@ public class MiscRest {
 	public Response getAutoUsers(@QueryParam("term") String user){
 		List<String> autoUsers = miscDao.getAutoUsers(user);
 		return Response.status(200).entity(autoUsers).build();
+	}
+	
+	@POST
+	@Path("/binddata")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response bindData(TempBean data){
+		System.out.println(data);
+		return Response.status(200).build();
 	}
 }

@@ -47,6 +47,7 @@
 		<div id="filter" style="margin-left:30%;display:none">Search Invoices</div>
 		
 		<a class="btn" id="pdfTrigger" href="rest/jasper/jqplot-jasper-intergration">Download in PDF</a>
+		<button class="btn btn-danger" id="trythis">Try This</button>
 	</div>
 
 
@@ -61,6 +62,19 @@
 			/* constructGrid(); */
 			/* drawDemoGrid(); */
 			drawToolbarGrid();
+		});
+		
+		$('#trythis').click(function(event){
+			event.preventDefault();
+			var data = '{"date":"01-Nov-2013 [Friday]","data":[{"date":"01-Nov-2013 [Friday]","saashits":67,"clicks":"12 [17.91%]","rank_zero":"7 [10.45%]","top_five":"12 [17.91%]","others":"0 [0.000%]"},{"date":"02-Nov-2013 [Saturday]","saashits":35,"clicks":"10 [28.57%]","rank_zero":"6 [17.14%]","top_five":"9 [25.71%]","others":"1 [2.857%]"},{"date":"03-Nov-2013 [Sunday]","saashits":35,"clicks":"10 [28.57%]","rank_zero":"3 [8.571%]","top_five":"8 [22.86%]","others":"2 [5.714%]"},{"date":"04-Nov-2013 [Monday]","saashits":49,"clicks":"16 [32.65%]","rank_zero":"5 [10.20%]","top_five":"13 [26.53%]","others":"3 [6.122%]"},{"date":"06-Nov-2013 [Wednesday]","saashits":74,"clicks":"10 [13.51%]","rank_zero":"7 [9.459%]","top_five":"8 [10.81%]","others":"2 [2.703%]"},{"date":"07-Nov-2013 [Thursday]","saashits":55,"clicks":"8 [14.55%]","rank_zero":"3 [5.455%]","top_five":"7 [12.73%]","others":"1 [1.818%]"},{"date":"08-Nov-2013 [Friday]","saashits":71,"clicks":"20 [28.17%]","rank_zero":"9 [12.68%]","top_five":"14 [19.72%]","others":"6 [8.451%]"},{"date":"09-Nov-2013 [Saturday]","saashits":73,"clicks":"17 [23.29%]","rank_zero":"5 [6.849%]","top_five":"16 [21.92%]","others":"1 [1.370%]"},{"date":"10-Nov-2013 [Sunday]","saashits":42,"clicks":"16 [38.10%]","rank_zero":"9 [21.43%]","top_five":"12 [28.57%]","others":"4 [9.524%]"},{"date":"11-Nov-2013 [Monday]","saashits":43,"clicks":"15 [34.88%]","rank_zero":"6 [13.95%]","top_five":"11 [25.58%]","others":"4 [9.302%]"}]}';
+			
+			$.ajax({
+				url: 'rest/misc/binddata',
+				type: 'POST',
+				data: data,
+				dataType: 'json',
+				contentType: 'application/json'
+			})
 		});
 		
 		
