@@ -38,4 +38,25 @@ public class MiscRest {
 		System.out.println(data);
 		return Response.status(200).build();
 	}
+	
+	@GET
+	@Path("/halt-request-one")
+	@Produces(MediaType.TEXT_HTML)
+	public Response haltRequestOne(@QueryParam("duration") String duration){
+		long d = 0l;
+		try{
+			d = Long.parseLong(duration);
+		}catch(NumberFormatException e){
+			System.out.println(">>>>>>>>>>>>>>>>parsing failed....assigning default value");
+			d = 2000l;
+		}
+		
+		try {
+			Thread.sleep(d);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		return Response.status(200).entity("hello world").build();
+	}
 }
